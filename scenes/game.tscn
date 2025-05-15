@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6pfnafjpaows"]
+
+[ext_resource type="Script" uid="uid://box6058l763dg" path="res://scenes/game.gd" id="1_uwrxv"]
+
+[node name="Game" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_uwrxv")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="rightSide" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="colClues" type="HBoxContainer" parent="MarginContainer/HBoxContainer/rightSide"]
+layout_mode = 2
+
+[node name="puzzleGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/rightSide"]
+layout_mode = 2
+columns = 5
+
+[node name="leftSide" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="topLeftFiller" type="Control" parent="MarginContainer/HBoxContainer/leftSide"]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+
+[node name="rowClues" type="VBoxContainer" parent="MarginContainer/HBoxContainer/leftSide"]
+layout_mode = 2

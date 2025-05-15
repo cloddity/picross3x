@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8thhbnoxbdoy"]
+
+[ext_resource type="Script" uid="uid://btjebyd1v2xyh" path="res://scenes/tiles/tile.gd" id="1_dbxmt"]
+
+[node name="Tile" type="Button"]
+custom_minimum_size = Vector2(48, 48)
+script = ExtResource("1_dbxmt")
