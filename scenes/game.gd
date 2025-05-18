@@ -20,6 +20,10 @@ var puzzle := []
 var row_clues := []
 var col_clues := []
 
+var is_dragging := false
+var drag_start_tile: Node = null
+var current_drag_line := []
+
 func _ready():
 	generate_random_puzzle(puzzle_size)
 	initialize_puzzle()
@@ -33,6 +37,64 @@ func _ready():
 	var target_width = puzzle_container.size.x
 	input_container.position.x = UNIT_CONST * MARGIN_CONST
 	print(target_width)
+	
+func _input(event):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed:
+				is_dragging = true
+				drag_start_tile = null
+				current_drag_line.clear()
+			else:
+				for tile in current_drag_line:
+					tile.toggle_fill() 
+				current_drag_line.clear()
+				is_dragging = false
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+			if event.pressed:
+				is_dragging = true
+				drag_start_tile = null
+				current_drag_line.clear()
+			else:
+				for tile in current_drag_line:
+					tile.toggle_x() 
+				current_drag_line.clear()
+				is_dragging = false
+
+func _on_tile_hovered(tile):
+	if not is_dragging:
+		return
+
+	if drag_start_tile == null:
+		drag_start_tile = tile
+		current_drag_line.append(tile)
+		#tile.toggle_fill()
+		return
+
+	var dx = tile.grid_position.x - drag_start_tile.grid_position.x
+	var dy = tile.grid_position.y - drag_start_tile.grid_position.y
+
+	if dx != 0 and dy != 0:
+		return 
+
+	current_drag_line.clear()
+
+	for other_tile in puzzle_grid.get_children():
+		if not other_tile is Button:
+			continue
+		var pos = other_tile.grid_position
+		if dx == 0 and pos.x == drag_start_tile.grid_position.x:
+			if _in_range(pos.y, drag_start_tile.grid_position.y, tile.grid_position.y):
+				current_drag_line.append(other_tile)
+		elif dy == 0 and pos.y == drag_start_tile.grid_position.y:
+			if _in_range(pos.x, drag_start_tile.grid_position.x, tile.grid_position.x):
+				current_drag_line.append(other_tile)
+				
+	#print("Dragging over:", tile.grid_position)
+
+func _in_range(val, a, b):
+	return val >= min(a, b) and val <= max(a, b)
+
 	
 func adjust_top_left_filler():
 	var max_col_clue_height = 0
@@ -128,7 +190,7 @@ func populate_clue_labels():
 func populate_puzzle_grid():
 	for child in puzzle_grid.get_children():
 		child.queue_free()
-
+	
 	puzzle_grid.columns = puzzle_size
 	for y in puzzle_size:
 		for x in puzzle_size:
@@ -136,6 +198,9 @@ func populate_puzzle_grid():
 			tile.is_filled = puzzle[y][x] == 1
 			tile.connect("tile_pressed", self.check_solution)
 			puzzle_grid.add_child(tile)
+			
+			tile.grid_position = Vector2i(x, y)
+			tile.connect("tile_hovered", Callable(self, "_on_tile_hovered"))
 			
 func check_solution():
 	var all_correct = true
