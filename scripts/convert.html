@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image -> Binary String Converter</title>
+  <style>
+    body { font-family: sans-serif; max-width: 700px; margin: 2em auto; }
+    canvas { display: none; }
+    textarea { width: 100%; height: 150px; margin-top: 1em; font-family: monospace; }
+    label, input, button { margin-top: .5em; display: block; }
+  </style>
+</head>
+<body>
+  <h1>Image -> Binary String Converter</h1>
+  <label>
+    Choose an image:
+    <input type="file" id="fileInput" accept="image/*">
+  </label>
+  <label>
+    Threshold (0–255):
+    <input type="range" id="threshold" min="0" max="255" value="128">
+    <span id="thVal">128</span>
+  </label>
+  <button id="convertBtn" disabled>Convert</button>
+
+  <textarea id="output" placeholder="Output:" readonly></textarea>
+  <canvas id="canvas"></canvas>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const thresholdSlider = document.getElementById('threshold');
+    const thVal = document.getElementById('thVal');
+    const convertBtn = document.getElementById('convertBtn');
+    const output = document.getElementById('output');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    thresholdSlider.addEventListener('input', () => {
+      thVal.textContent = thresholdSlider.value;
+    });
+
+    fileInput.addEventListener('change', () => {
+      convertBtn.disabled = !fileInput.files.length;
+      output.value = '';
+    });
+
+    convertBtn.addEventListener('click', () => {
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        const imgData = ctx.getImageData(0, 0, img.width, img.height).data;
+        const th = parseInt(thresholdSlider.value, 10);
+
+        let rows = [];
+        for (let y = 0; y < img.height; y++) {
+          let bits = '';
+          for (let x = 0; x < img.width; x++) {
+            const i = (y * img.width + x) * 4;
+            // average RGB
+            const gray = (imgData[i] + imgData[i+1] + imgData[i+2]) / 3;
+            bits += (gray < th ? '1' : '0');
+          }
+          rows.push(bits);
+        }
+        output.value = rows.join(',');
+        URL.revokeObjectURL(url);
+      };
+      img.src = url;
+    });
+  </script>
+</body>
+</html>

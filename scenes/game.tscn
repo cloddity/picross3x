@@ -11,28 +11,65 @@ script = ExtResource("1_uwrxv")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 20.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="picrossContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="puzzleContainer" type="HBoxContainer" parent="MarginContainer/picrossContainer"]
 layout_mode = 2
 
-[node name="rightSide" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+[node name="leftSide" type="VBoxContainer" parent="MarginContainer/picrossContainer/puzzleContainer"]
 layout_mode = 2
 
-[node name="colClues" type="HBoxContainer" parent="MarginContainer/HBoxContainer/rightSide"]
+[node name="topLeftFiller" type="Control" parent="MarginContainer/picrossContainer/puzzleContainer/leftSide"]
 layout_mode = 2
 
-[node name="puzzleGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/rightSide"]
+[node name="rowClues" type="VBoxContainer" parent="MarginContainer/picrossContainer/puzzleContainer/leftSide"]
+layout_mode = 2
+
+[node name="rightSide" type="VBoxContainer" parent="MarginContainer/picrossContainer/puzzleContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="topFiller" type="Control" parent="MarginContainer/picrossContainer/puzzleContainer/rightSide"]
+layout_mode = 2
+
+[node name="colClues" type="HBoxContainer" parent="MarginContainer/picrossContainer/puzzleContainer/rightSide"]
+layout_mode = 2
+
+[node name="puzzleGrid" type="GridContainer" parent="MarginContainer/picrossContainer/puzzleContainer/rightSide"]
 layout_mode = 2
 columns = 5
 
-[node name="leftSide" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+[node name="spacer" type="Control" parent="MarginContainer/picrossContainer"]
+custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="topLeftFiller" type="Control" parent="MarginContainer/HBoxContainer/leftSide"]
-custom_minimum_size = Vector2(96, 96)
+[node name="UI" type="Control" parent="MarginContainer/picrossContainer"]
 layout_mode = 2
 
-[node name="rowClues" type="VBoxContainer" parent="MarginContainer/HBoxContainer/leftSide"]
+[node name="inputContainer" type="VBoxContainer" parent="MarginContainer/picrossContainer/UI"]
+layout_mode = 0
+offset_right = 120.0
+offset_bottom = 60.0
+
+[node name="importText" type="TextEdit" parent="MarginContainer/picrossContainer/UI/inputContainer"]
+custom_minimum_size = Vector2(120, 36)
 layout_mode = 2
+scroll_fit_content_height = true
+scroll_fit_content_width = true
+
+[node name="buttonContainer" type="HBoxContainer" parent="MarginContainer/picrossContainer/UI/inputContainer"]
+layout_mode = 2
+
+[node name="importButton" type="Button" parent="MarginContainer/picrossContainer/UI/inputContainer/buttonContainer"]
+custom_minimum_size = Vector2(50, 20)
+layout_mode = 2
+text = "Import"
+
+[node name="randomButton" type="Button" parent="MarginContainer/picrossContainer/UI/inputContainer/buttonContainer"]
+custom_minimum_size = Vector2(50, 36)
+layout_mode = 2
+text = "Generate"

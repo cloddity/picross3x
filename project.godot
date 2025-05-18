@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 project/assembly_name="picrossx3"
 
+[gui]
+
+theme/custom="uid://kst8s1vas274"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

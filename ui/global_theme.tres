@@ -1,0 +1,7 @@
+[gd_resource type="Theme" format=3 uid="uid://kst8s1vas274"]
+
+[resource]
+GridContainer/constants/h_separation = 0
+GridContainer/constants/v_separation = 0
+HBoxContainer/constants/separation = 0
+VBoxContainer/constants/separation = 0

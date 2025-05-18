@@ -1,10 +1,19 @@
 extends Control
 
 const TILE_SCENE = preload("res://scenes/tiles/Tile.tscn")
+const UNIT_CONST = 36
+const MARGIN_CONST = 3
 
-@onready var puzzle_grid = $MarginContainer/HBoxContainer/rightSide/puzzleGrid
-@onready var row_clues_box = $MarginContainer/HBoxContainer/leftSide/rowClues
-@onready var top_clues_box = $MarginContainer/HBoxContainer/rightSide/colClues
+@onready var puzzle_container = $MarginContainer/picrossContainer/puzzleContainer
+@onready var input_container = $MarginContainer/picrossContainer/UI/inputContainer
+@onready var puzzle_grid = $MarginContainer/picrossContainer/puzzleContainer/rightSide/puzzleGrid
+@onready var row_clues_box = $MarginContainer/picrossContainer/puzzleContainer/leftSide/rowClues
+@onready var top_clues_box = $MarginContainer/picrossContainer/puzzleContainer/rightSide/colClues
+@onready var top_left_filler = $MarginContainer/picrossContainer/puzzleContainer/leftSide/topLeftFiller
+@onready var import_input = $MarginContainer/picrossContainer/UI/inputContainer/importText
+@onready var import_button = $MarginContainer/picrossContainer/UI/inputContainer/buttonContainer/importButton
+@onready var random_button = $MarginContainer/picrossContainer/UI/inputContainer/buttonContainer/randomButton
+@onready var top_filler = $MarginContainer/picrossContainer/puzzleContainer/rightSide/topFiller
 
 var puzzle_size := 5
 var puzzle := []
@@ -13,9 +22,34 @@ var col_clues := []
 
 func _ready():
 	generate_random_puzzle(puzzle_size)
-	generate_clues()
-	populate_clue_labels()
-	populate_puzzle_grid()
+	initialize_puzzle()
+	
+	import_button.pressed.connect(on_import_button_pressed)
+	random_button.pressed.connect(on_random_button_pressed)
+	
+	print("Tile min size:", custom_minimum_size)
+	print("Tile actual size:", size)
+	
+	var target_width = puzzle_container.size.x
+	input_container.position.x = UNIT_CONST * MARGIN_CONST
+	print(target_width)
+	
+func adjust_top_left_filler():
+	var max_col_clue_height = 0
+	var max_row_clue_width = 0
+
+	for vbox in top_clues_box.get_children():
+		max_col_clue_height = max(max_col_clue_height, vbox.get_child_count())
+
+	for hbox in row_clues_box.get_children():
+		max_row_clue_width = max(max_row_clue_width, hbox.get_child_count())
+
+	var filler_size = Vector2(MARGIN_CONST * UNIT_CONST, MARGIN_CONST * UNIT_CONST)
+	var top_filler_size = Vector2(0, (MARGIN_CONST - max_col_clue_height + 1) * UNIT_CONST)
+
+	top_left_filler.custom_minimum_size = filler_size
+	top_filler.custom_minimum_size = top_filler_size
+	top_filler.size_flags_horizontal = 0
 
 func generate_random_puzzle(size: int):
 	puzzle.clear()
@@ -58,10 +92,15 @@ func populate_clue_labels():
 
 	for clues in row_clues:
 		var hbox = HBoxContainer.new()
+		hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		var spacer = Control.new()
+		spacer.size_flags_horizontal = Control.SIZE_EXPAND
+		hbox.add_child(spacer)
+		
 		for num in clues:
 			var label = Label.new()
 			label.text = str(num)
-			label.custom_minimum_size = Vector2(48, 48)
+			label.custom_minimum_size = Vector2(UNIT_CONST, UNIT_CONST)
 			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 			hbox.add_child(label)
@@ -78,7 +117,7 @@ func populate_clue_labels():
 		for num in clues:
 			var label = Label.new()
 			label.text = str(num)
-			label.custom_minimum_size = Vector2(48, 48)
+			label.custom_minimum_size = Vector2(UNIT_CONST, UNIT_CONST)
 			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 			vbox.add_child(label)
@@ -112,6 +151,35 @@ func check_solution():
 				break
 
 	if all_correct:
-		print("Puzzle solved!")
-	else:
-		print("Still incorrect.")
+		print("solved")
+		
+func on_import_button_pressed():
+	var input_text = import_input.text.strip_edges()
+	var lines = input_text.split(",", false)
+
+	if lines.is_empty():
+		print("No input provided.")
+		return
+
+	puzzle_size = lines.size()
+	puzzle.clear()
+
+	for line in lines:
+		var row = []
+		for char in line.strip_edges():
+			row.append(1 if char == "1" else 0)
+		puzzle.append(row)
+		
+	initialize_puzzle()
+	
+func initialize_puzzle():
+	generate_clues()
+	populate_clue_labels()
+	populate_puzzle_grid()
+	adjust_top_left_filler()
+	await get_tree().process_frame
+	adjust_top_left_filler()
+	
+func on_random_button_pressed():
+	generate_random_puzzle(puzzle_size)
+	initialize_puzzle()
