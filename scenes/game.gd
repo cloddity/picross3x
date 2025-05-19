@@ -21,8 +21,10 @@ var row_clues := []
 var col_clues := []
 
 var is_dragging := false
-var drag_start_tile: Node = null
-var current_drag_line := []
+var drag_start_tile = null
+var direction = null
+var selected_rc = null
+var selected_fx = null
 
 func _ready():
 	generate_random_puzzle(puzzle_size)
@@ -37,28 +39,38 @@ func _ready():
 	var target_width = puzzle_container.size.x
 	input_container.position.x = UNIT_CONST * MARGIN_CONST
 	print(target_width)
+
+func set_tile():
+	is_dragging = true
+	direction = null
+	selected_rc = null
+	drag_start_tile = null
+	for tile in puzzle_grid.get_children():
+		if tile.is_mouse_over():
+			_on_tile_hovered(tile)
+			break
+
+func mark_tile(tile):
+	if selected_fx == 1:
+		tile.toggle_fill()
+		print("f")
+	elif selected_fx == 2:
+		tile.toggle_x()
+		print("x")
 	
 func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
-				is_dragging = true
-				drag_start_tile = null
-				current_drag_line.clear()
+				selected_fx = 1
+				set_tile()
 			else:
-				for tile in current_drag_line:
-					tile.toggle_fill() 
-				current_drag_line.clear()
 				is_dragging = false
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			if event.pressed:
-				is_dragging = true
-				drag_start_tile = null
-				current_drag_line.clear()
+				selected_fx = 2
+				set_tile()
 			else:
-				for tile in current_drag_line:
-					tile.toggle_x() 
-				current_drag_line.clear()
 				is_dragging = false
 
 func _on_tile_hovered(tile):
@@ -66,31 +78,53 @@ func _on_tile_hovered(tile):
 		return
 
 	if drag_start_tile == null:
-		drag_start_tile = tile
-		current_drag_line.append(tile)
-		#tile.toggle_fill()
+		drag_start_tile = {
+			"grid_position": tile.grid_position,
+			"is_marked": tile.is_marked,
+		}
+		if tile.is_marked == 0:
+			if selected_fx == 1:
+				tile.toggle_fill()
+			elif selected_fx == 2:
+				tile.toggle_x()
+		elif tile.is_marked != 0:
+			tile.untoggle_fill()
+		#print("initialized:", drag_start_tile.grid_position, " ", drag_start_tile.is_marked)
 		return
 
-	var dx = tile.grid_position.x - drag_start_tile.grid_position.x
-	var dy = tile.grid_position.y - drag_start_tile.grid_position.y
+	var dx = tile.grid_position.x - drag_start_tile["grid_position"].x
+	var dy = tile.grid_position.y - drag_start_tile["grid_position"].y
 
 	if dx != 0 and dy != 0:
 		return 
+	
+	if drag_start_tile["grid_position"] == tile.grid_position:
+		return
+		
+	if dx != 0 and direction == null:
+		direction = 0
+		selected_rc = drag_start_tile["grid_position"].y
+	elif dy != 0 and direction == null:
+		direction = 1
+		selected_rc = drag_start_tile["grid_position"].x
 
-	current_drag_line.clear()
+	if direction == 0 and tile.grid_position.y == drag_start_tile["grid_position"].y:
+		if drag_start_tile["is_marked"] == 0 and tile.is_marked == 0:
+			mark_tile(tile)
+		elif drag_start_tile["is_marked"] != 0 and tile.is_marked != 0:
+			if drag_start_tile["is_marked"] == tile.is_marked:
+				tile.untoggle_fill()
+				print("u1")
+	elif direction == 1 and tile.grid_position.x == drag_start_tile["grid_position"].x:
+		if drag_start_tile["is_marked"] == 0 and tile.is_marked == 0:
+			mark_tile(tile)
+		elif drag_start_tile["is_marked"] != 0 and tile.is_marked != 0:
+			if drag_start_tile["is_marked"] == tile.is_marked:
+				tile.untoggle_fill()
+				print("u2")
+			
+	#print(direction, " ", selected_rc, "dx", dx, "dy", dy)
 
-	for other_tile in puzzle_grid.get_children():
-		if not other_tile is Button:
-			continue
-		var pos = other_tile.grid_position
-		if dx == 0 and pos.x == drag_start_tile.grid_position.x:
-			if _in_range(pos.y, drag_start_tile.grid_position.y, tile.grid_position.y):
-				current_drag_line.append(other_tile)
-		elif dy == 0 and pos.y == drag_start_tile.grid_position.y:
-			if _in_range(pos.x, drag_start_tile.grid_position.x, tile.grid_position.x):
-				current_drag_line.append(other_tile)
-				
-	#print("Dragging over:", tile.grid_position)
 
 func _in_range(val, a, b):
 	return val >= min(a, b) and val <= max(a, b)
@@ -186,7 +220,6 @@ func populate_clue_labels():
 
 		top_clues_box.add_child(vbox)
 
-
 func populate_puzzle_grid():
 	for child in puzzle_grid.get_children():
 		child.queue_free()
@@ -201,23 +234,22 @@ func populate_puzzle_grid():
 			
 			tile.grid_position = Vector2i(x, y)
 			tile.connect("tile_hovered", Callable(self, "_on_tile_hovered"))
-			
+
 func check_solution():
 	var all_correct = true
-
 	for tile in puzzle_grid.get_children():
 		if tile.is_filled:
-			if tile.text != "■":
+			if tile.is_marked != 1:
 				all_correct = false
 				break
 		else:
-			if tile.text == "■":
+			if tile.is_marked == 1:
 				all_correct = false
 				break
-
+				
 	if all_correct:
 		print("solved")
-		
+
 func on_import_button_pressed():
 	var input_text = import_input.text.strip_edges()
 	var lines = input_text.split(",", false)
@@ -241,7 +273,6 @@ func initialize_puzzle():
 	generate_clues()
 	populate_clue_labels()
 	populate_puzzle_grid()
-	adjust_top_left_filler()
 	await get_tree().process_frame
 	adjust_top_left_filler()
 	
