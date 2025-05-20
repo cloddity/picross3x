@@ -1,19 +1,20 @@
-extends Control
+extends VBoxContainer
 
-const TILE_SCENE = preload("res://scenes/tiles/Tile.tscn")
+const TILE_SCENE = preload("res://scenes/picross/tiles/tile.tscn")
 const UNIT_CONST = 36
 const MARGIN_CONST = 3
 
-@onready var puzzle_container = $MarginContainer/picrossContainer/puzzleContainer
-@onready var input_container = $MarginContainer/picrossContainer/UI/inputContainer
-@onready var puzzle_grid = $MarginContainer/picrossContainer/puzzleContainer/rightSide/puzzleGrid
-@onready var row_clues_box = $MarginContainer/picrossContainer/puzzleContainer/leftSide/rowClues
-@onready var top_clues_box = $MarginContainer/picrossContainer/puzzleContainer/rightSide/colClues
-@onready var top_left_filler = $MarginContainer/picrossContainer/puzzleContainer/leftSide/topLeftFiller
-@onready var import_input = $MarginContainer/picrossContainer/UI/inputContainer/importText
-@onready var import_button = $MarginContainer/picrossContainer/UI/inputContainer/buttonContainer/importButton
-@onready var random_button = $MarginContainer/picrossContainer/UI/inputContainer/buttonContainer/randomButton
-@onready var top_filler = $MarginContainer/picrossContainer/puzzleContainer/rightSide/topFiller
+@onready var puzzle_container = $puzzleContainer
+@onready var input_container = $UI/inputContainer
+@onready var puzzle_grid = $puzzleContainer/rightSide/puzzleGrid
+@onready var row_clues_box = $puzzleContainer/leftSide/rowClues
+@onready var top_clues_box = $puzzleContainer/rightSide/colClues
+@onready var top_left_filler = $puzzleContainer/leftSide/topLeftFiller
+@onready var import_input = $UI/inputContainer/importText
+@onready var import_button = $UI/inputContainer/buttonContainer/importButton
+@onready var random_button = $UI/inputContainer/buttonContainer/randomButton
+@onready var top_filler = $puzzleContainer/rightSide/topFiller
+@onready var ui = $UI
 
 var puzzle_size := 5
 var puzzle := []
@@ -26,12 +27,12 @@ var direction = null
 var selected_rc = null
 var selected_fx = null
 
-func _ready():
+func start_game():
 	generate_random_puzzle(puzzle_size)
 	initialize_puzzle()
 	
-	import_button.pressed.connect(on_import_button_pressed)
-	random_button.pressed.connect(on_random_button_pressed)
+	ui.import_requested.connect(_on_import)
+	ui.random_requested.connect(_on_random)
 	
 	print("Tile min size:", custom_minimum_size)
 	print("Tile actual size:", size)
@@ -249,26 +250,7 @@ func check_solution():
 				
 	if all_correct:
 		print("solved")
-
-func on_import_button_pressed():
-	var input_text = import_input.text.strip_edges()
-	var lines = input_text.split(",", false)
-
-	if lines.is_empty():
-		print("No input provided.")
-		return
-
-	puzzle_size = lines.size()
-	puzzle.clear()
-
-	for line in lines:
-		var row = []
-		for char in line.strip_edges():
-			row.append(1 if char == "1" else 0)
-		puzzle.append(row)
 		
-	initialize_puzzle()
-	
 func initialize_puzzle():
 	generate_clues()
 	populate_clue_labels()
@@ -276,6 +258,11 @@ func initialize_puzzle():
 	await get_tree().process_frame
 	adjust_top_left_filler()
 	
-func on_random_button_pressed():
+func _on_import(puzzle_data: Array):
+	puzzle_size = puzzle_data.size()
+	puzzle = puzzle_data
+	initialize_puzzle()
+
+func _on_random():
 	generate_random_puzzle(puzzle_size)
 	initialize_puzzle()

@@ -29,19 +29,15 @@ func _gui_input(event):
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			emit_signal("tile_pressed")
 
-func toggle_fill():
-	is_marked = 1
-	text = "■"
 
 func untoggle_fill():
 	is_marked = 0
 	text = ""
 	
+func toggle_fill():
+	is_marked = 1
+	text = "■"
+	
 func toggle_x():
 	is_marked = 2
 	text = "X"
-
-#func toggle_fill_drag():
-	#is_marked_fill = true
-	#is_marked_x = false
-	#text = "■"

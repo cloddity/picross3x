@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://bp6jf0w6sefbx"]
+
+[ext_resource type="Script" uid="uid://clwkpu8vsjqsv" path="res://scripts/ui.gd" id="1_d2gw2"]
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 142.0
+offset_bottom = 72.0
+script = ExtResource("1_d2gw2")
+
+[node name="inputContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_right = 142.0
+offset_bottom = 72.0
+
+[node name="spacer" type="Control" parent="inputContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="importText" type="TextEdit" parent="inputContainer"]
+custom_minimum_size = Vector2(120, 36)
+layout_mode = 2
+scroll_fit_content_height = true
+scroll_fit_content_width = true
+
+[node name="buttonContainer" type="HBoxContainer" parent="inputContainer"]
+layout_mode = 2
+
+[node name="importButton" type="Button" parent="inputContainer/buttonContainer"]
+custom_minimum_size = Vector2(50, 20)
+layout_mode = 2
+text = "Import"
+
+[node name="randomButton" type="Button" parent="inputContainer/buttonContainer"]
+custom_minimum_size = Vector2(50, 36)
+layout_mode = 2
+text = "Generate"

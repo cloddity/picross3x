@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6pfnafjpaows"]
+
+[ext_resource type="Script" uid="uid://box6058l763dg" path="res://scripts/game.gd" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://bp6jf0w6sefbx" path="res://scenes/ui/ui.tscn" id="2_yqjtg"]
+
+[node name="Game" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_uwrxv")
+
+[node name="picrossContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_bottom = 20.0
+theme_override_constants/separation = 0
+
+[node name="puzzleContainer" type="HBoxContainer" parent="picrossContainer"]
+layout_mode = 2
+
+[node name="leftSide" type="VBoxContainer" parent="picrossContainer/puzzleContainer"]
+layout_mode = 2
+
+[node name="topLeftFiller" type="Control" parent="picrossContainer/puzzleContainer/leftSide"]
+layout_mode = 2
+
+[node name="rowClues" type="VBoxContainer" parent="picrossContainer/puzzleContainer/leftSide"]
+layout_mode = 2
+
+[node name="rightSide" type="VBoxContainer" parent="picrossContainer/puzzleContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="topFiller" type="Control" parent="picrossContainer/puzzleContainer/rightSide"]
+layout_mode = 2
+
+[node name="colClues" type="HBoxContainer" parent="picrossContainer/puzzleContainer/rightSide"]
+layout_mode = 2
+
+[node name="puzzleGrid" type="GridContainer" parent="picrossContainer/puzzleContainer/rightSide"]
+layout_mode = 2
+columns = 5
+
+[node name="UI" parent="picrossContainer" instance=ExtResource("2_yqjtg")]
+layout_mode = 2
