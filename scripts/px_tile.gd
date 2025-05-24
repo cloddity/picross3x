@@ -1,16 +1,20 @@
-extends Button
+extends TextureButton
 
 signal tile_pressed
 signal tile_hovered(tile: Node)
 
 const UNIT_CONST = 36
 
+var pxtile_empty = preload("res://img/sqr_black.png")
+var pxtile_filled = preload("res://img/sqr_white.png")
+var pxtile_cross = preload("res://img/sqr_cross.png")
+
 var is_filled: bool = false
 var is_marked: int = 0
 var grid_position: Vector2i
 
 func _ready():
-	text = ""
+	texture_normal = pxtile_empty
 	toggle_mode = false
 	focus_mode = Control.FOCUS_NONE
 	custom_minimum_size = Vector2(UNIT_CONST, UNIT_CONST)
@@ -32,12 +36,14 @@ func _gui_input(event):
 
 func untoggle_fill():
 	is_marked = 0
-	text = ""
+	texture_normal = pxtile_empty
+
 	
 func toggle_fill():
 	is_marked = 1
-	text = "■"
+	texture_normal = pxtile_filled
+
 	
 func toggle_x():
 	is_marked = 2
-	text = "X"
+	texture_normal = pxtile_cross

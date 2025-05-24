@@ -1,7 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://c8thhbnoxbdoy"]
+[gd_scene load_steps=3 format=3 uid="uid://c8thhbnoxbdoy"]
 
 [ext_resource type="Script" uid="uid://btjebyd1v2xyh" path="res://scripts/px_tile.gd" id="1_e7h5d"]
+[ext_resource type="Texture2D" uid="uid://o73rgb12ie73" path="res://img/sqr_black.png" id="1_m0p8g"]
 
-
-[node name="tile" type="Button"]
+[node name="tile" type="TextureButton"]
+offset_right = 8.0
+offset_bottom = 8.0
+texture_normal = ExtResource("1_m0p8g")
+ignore_texture_size = true
+stretch_mode = 0
 script = ExtResource("1_e7h5d")
