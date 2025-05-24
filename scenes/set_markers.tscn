@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://bf31b3n4svhp3"]
+
+[node name="SetMarkers" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="offleft" type="ReferenceRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = -746.0
+offset_right = -706.0
+offset_bottom = 40.0
+border_width = 4.0
+
+[node name="farleft" type="ReferenceRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 254.0
+offset_right = 294.0
+offset_bottom = 40.0
+border_width = 4.0
+
+[node name="left" type="ReferenceRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 594.0
+offset_right = 634.0
+offset_bottom = 40.0
+border_width = 4.0
+
+[node name="center" type="ReferenceRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 937.0
+offset_right = 977.0
+offset_bottom = 40.0
+border_width = 4.0
+
+[node name="right" type="ReferenceRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1338.0
+offset_right = 1378.0
+offset_bottom = 40.0
+border_width = 4.0
+
+[node name="farright" type="ReferenceRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1678.0
+offset_right = 1718.0
+offset_bottom = 40.0
+border_width = 4.0
+
+[node name="offright" type="ReferenceRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 2762.0
+offset_right = 2802.0
+offset_bottom = 40.0
+border_width = 4.0

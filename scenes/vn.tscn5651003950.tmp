@@ -1,21 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://b5oql2xc4cmop"]
+[gd_scene load_steps=5 format=3 uid="uid://b5oql2xc4cmop"]
 
-[ext_resource type="PackedScene" uid="uid://c7k3jdr5ttrh6" path="res://scenes/dialog.tscn" id="1_5dg8i"]
-[ext_resource type="Script" uid="uid://cc21hqqlckmr8" path="res://scrpt_test.gd" id="1_6pmo6"]
+[ext_resource type="PackedScene" uid="uid://c7k3jdr5ttrh6" path="res://scenes/textbox.tscn" id="1_5dg8i"]
+[ext_resource type="Script" uid="uid://chiqb1qotp86a" path="res://scenes/character.gd" id="1_6pmo6"]
 [ext_resource type="Texture2D" uid="uid://dbde3rapi84ja" path="res://img/backgrounds/background.png" id="2_5dg8i"]
 [ext_resource type="PackedScene" uid="uid://bf31b3n4svhp3" path="res://scenes/set_markers.tscn" id="3_6pmo6"]
-[ext_resource type="PackedScene" uid="uid://dykrltynbiskl" path="res://scenes/chara/beat.tscn" id="3_q56e4"]
-[ext_resource type="PackedScene" uid="uid://2yn7kpja8qp7" path="res://scenes/chara/cosmicspirit.tscn" id="4_kepyh"]
 
 [node name="VN" type="Node2D"]
 script = ExtResource("1_6pmo6")
 
-[node name="SetMarkers" parent="." instance=ExtResource("3_6pmo6")]
-
 [node name="Textbox Layer" type="CanvasLayer" parent="."]
 layer = 10
 
-[node name="Dialog" parent="Textbox Layer" instance=ExtResource("1_5dg8i")]
+[node name="textbox ui" parent="Textbox Layer" instance=ExtResource("1_5dg8i")]
 offset_top = -460.68
 offset_bottom = -44.6799
 
@@ -30,14 +26,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Beat" parent="Chara Layer/Chara Control" instance=ExtResource("3_q56e4")]
-layout_mode = 1
-
-[node name="CosmicSpirit" parent="Chara Layer/Chara Control" instance=ExtResource("4_kepyh")]
-layout_mode = 1
-
 [node name="BG Layer" type="CanvasLayer" parent="."]
 layer = -10
+
+[node name="SetMarkers" parent="BG Layer" instance=ExtResource("3_6pmo6")]
 
 [node name="BG Texture Control" type="Control" parent="BG Layer"]
 clip_contents = true

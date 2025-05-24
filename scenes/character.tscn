@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cuaqlk1rogntk"]
 
-[ext_resource type="Texture2D" uid="uid://cdebm6m2g528q" path="res://img/characters/goss/cosmic spirit.png" id="1_agfs1"]
+[ext_resource type="Texture2D" uid="uid://b2p36o63bccbg" path="res://img/characters/02/Beat.png" id="1_agfs1"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rkhd4"]
 animations = [{
@@ -13,9 +13,18 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Character" type="Node2D"]
+[node name="Character_2" type="Node2D"]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(308, 584)
-scale = Vector2(0.455, 0.455)
+[node name="Controller" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="cosmicsprit" type="AnimatedSprite2D" parent="Controller"]
+position = Vector2(48, 772)
+scale = Vector2(0.213084, 0.213084)
 sprite_frames = SubResource("SpriteFrames_rkhd4")

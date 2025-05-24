@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="picross3x"
-run/main_scene="uid://c6pfnafjpaows"
+run/main_scene="uid://b5oql2xc4cmop"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 

@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://dykrltynbiskl"]
+
+[ext_resource type="Texture2D" uid="uid://b2p36o63bccbg" path="res://img/characters/02/Beat.png" id="1_lrbyn"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rkhd4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_lrbyn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Beat" type="Control"]
+layout_mode = 3
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="beat" type="AnimatedSprite2D" parent="."]
+position = Vector2(39, 772)
+scale = Vector2(0.213084, 0.213084)
+sprite_frames = SubResource("SpriteFrames_rkhd4")
