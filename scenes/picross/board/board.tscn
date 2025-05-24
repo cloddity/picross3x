@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=3 uid="uid://drlex6la3dhvk"]
 
 [ext_resource type="PackedScene" uid="uid://bp6jf0w6sefbx" path="res://scenes/picross/ui/ui.tscn" id="1_70dfo"]
-[ext_resource type="Script" uid="uid://box6058l763dg" path="res://scripts/board.gd" id="1_t7a1m"]
+[ext_resource type="Script" uid="uid://box6058l763dg" path="res://scripts/px_board.gd" id="1_t7a1m"]
+
 
 [node name="Board" type="VBoxContainer"]
 script = ExtResource("1_t7a1m")

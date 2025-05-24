@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=3 uid="uid://c6pfnafjpaows"]
 
-[ext_resource type="Script" uid="uid://dgu5t285agx4i" path="res://scripts/game.gd" id="1_uwrxv"]
+[ext_resource type="Script" uid="uid://dgu5t285agx4i" path="res://scripts/px_game.gd" id="1_uwrxv"]
 [ext_resource type="PackedScene" uid="uid://drlex6la3dhvk" path="res://scenes/picross/board/board.tscn" id="2_lnu2h"]
+
 
 [node name="Game" type="Control"]
 layout_mode = 3

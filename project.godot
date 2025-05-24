@@ -19,9 +19,18 @@ config/icon="res://icon.svg"
 
 project/assembly_name="picrossx3"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/ai_assistant_hub/plugin.cfg")
+
 [gui]
 
 theme/custom="uid://kst8s1vas274"
+
+[plugins]
+
+ai_assistant_hub/base_url="http://127.0.0.1:11434"
+ai_assistant_hub/llm_api="ollama_api"
 
 [rendering]
 
