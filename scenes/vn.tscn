@@ -1,0 +1,50 @@
+[gd_scene load_steps=4 format=3 uid="uid://b5oql2xc4cmop"]
+
+[ext_resource type="PackedScene" uid="uid://c7k3jdr5ttrh6" path="res://scenes/textbox.tscn" id="1_5dg8i"]
+[ext_resource type="PackedScene" uid="uid://cuaqlk1rogntk" path="res://scenes/character.tscn" id="1_w7f32"]
+[ext_resource type="Texture2D" uid="uid://dbde3rapi84ja" path="res://img/backgrounds/background.png" id="2_5dg8i"]
+
+[node name="VN" type="Node2D"]
+
+[node name="Textbox Layer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="textbox ui" parent="Textbox Layer" instance=ExtResource("1_5dg8i")]
+offset_top = -460.68
+offset_bottom = -44.6799
+
+[node name="Chara Layer" type="CanvasLayer" parent="."]
+
+[node name="Chara Control" type="Control" parent="Chara Layer"]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Character" parent="Chara Layer/Chara Control" instance=ExtResource("1_w7f32")]
+position = Vector2(-6, 6)
+
+[node name="BG Layer" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="BG Texture Control" type="Control" parent="BG Layer"]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG texture" type="TextureRect" parent="BG Layer/BG Texture Control"]
+layout_mode = 0
+offset_top = -62.755
+offset_right = 2558.0
+offset_bottom = 1537.24
+scale = Vector2(0.75, 0.75)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_5dg8i")

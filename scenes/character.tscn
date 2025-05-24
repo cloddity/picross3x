@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://cuaqlk1rogntk"]
+
+[ext_resource type="Texture2D" uid="uid://cdebm6m2g528q" path="res://img/characters/goss/cosmic spirit.png" id="1_agfs1"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rkhd4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_agfs1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Character" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(308, 584)
+scale = Vector2(0.455, 0.455)
+sprite_frames = SubResource("SpriteFrames_rkhd4")

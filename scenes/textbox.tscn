@@ -1,0 +1,88 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7k3jdr5ttrh6"]
+
+[ext_resource type="StyleBox" uid="uid://84wjt7db8waa" path="res://ui/themes/textbox.tres" id="2_3xmdk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nyk3b"]
+bg_color = Color(1, 1, 1, 0.560784)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3xmdk"]
+font_size = 83
+font_color = Color(0.619581, 0.341569, 0.60854, 1)
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
+
+[node name="textbox ui" type="Control"]
+custom_minimum_size = Vector2(0, 416)
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -416.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="namebox" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(555.02, 130)
+layout_mode = 1
+offset_left = 85.615
+offset_right = 640.635
+offset_bottom = 130.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_nyk3b")
+
+[node name="Label" type="Label" parent="namebox"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Name here"
+label_settings = SubResource("LabelSettings_3xmdk")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="textbox" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(0, 282.54)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -286.0
+offset_bottom = -3.45996
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = ExtResource("2_3xmdk")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="textbox"]
+clip_contents = false
+custom_minimum_size = Vector2(1500, 191.005)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/bold_italics_font_size = 46
+theme_override_font_sizes/italics_font_size = 46
+theme_override_font_sizes/mono_font_size = 46
+theme_override_font_sizes/normal_font_size = 46
+theme_override_font_sizes/bold_font_size = 46
+bbcode_enabled = true
+text = " Oh wow... Im in a textbox! These are words that can appear in the video'd game. [b][shake]Wow![/shake][/b]
+This is a third line of text yyy
+and a forth
+"
+scroll_active = false
+justification_flags = 160
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -79.0
+offset_top = -95.0
+offset_right = -31.0
+offset_bottom = -31.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Polygon2D" type="Polygon2D" parent="Control"]
+polygon = PackedVector2Array(-2.21878e-05, 5.72205e-06, 47.9999, 32, -2.08616e-06, 64)

@@ -15,6 +15,19 @@ run/main_scene="uid://c6pfnafjpaows"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/borderless=true
+window/stretch/aspect="expand"
+mouse_cursor/size/mode=0
+mouse_cursor/size/initial_position_type=1
+mouse_cursor/size/viewport_height=1080
+mouse_cursor/size/viewport_width=1920
+mouse_cursor/stretch/aspect="expand"
+mouse_cursor/size/borderless=true
+
 [dotnet]
 
 project/assembly_name="picrossx3"

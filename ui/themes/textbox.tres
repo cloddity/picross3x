@@ -1,0 +1,7 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://84wjt7db8waa"]
+
+[ext_resource type="Texture2D" uid="uid://8k1o0cgn4knc" path="res://ui/ui_assets/txtboxbg.png" id="1_k6g3c"]
+
+[resource]
+texture = ExtResource("1_k6g3c")
+modulate_color = Color(1, 1, 1, 0.898039)

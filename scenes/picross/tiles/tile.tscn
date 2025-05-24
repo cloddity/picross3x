@@ -3,4 +3,8 @@
 [ext_resource type="Script" uid="uid://btjebyd1v2xyh" path="res://scripts/tile.gd" id="1_e7h5d"]
 
 [node name="tile" type="Button"]
+offset_left = 11.0
+offset_top = 14.0
+offset_right = 19.0
+offset_bottom = 22.0
 script = ExtResource("1_e7h5d")
