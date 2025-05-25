@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://byvxw183jkbv8"]
+
+[ext_resource type="Texture2D" uid="uid://cngnuug38lasy" path="res://img/cosmicspirit.png" id="1_j5cym"]
+
+[node name="charaSpirit" type="Control"]
+layout_mode = 3
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+
+[node name="spirittexture" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -617.0
+offset_top = 45.0
+offset_right = 1872.0
+offset_bottom = 2224.0
+scale = Vector2(0.502, 0.502)
+texture = ExtResource("1_j5cym")

@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://4a7i4lyg7md0"]
+
+[ext_resource type="Texture2D" uid="uid://bfwar5sw3y7l6" path="res://img/Beat.png" id="1_7wd8u"]
+
+[node name="charaBeat" type="Control"]
+layout_mode = 3
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+
+[node name="beattexture" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -295.0
+offset_top = 102.245
+offset_right = 2915.0
+offset_bottom = 6074.25
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("1_7wd8u")
