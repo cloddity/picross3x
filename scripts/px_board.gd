@@ -16,7 +16,7 @@ const MARGIN_CONST = 3
 @onready var top_filler = $puzzleContainer/rightSide/topFiller
 @onready var ui = $UI
 
-var puzzle_size := 5
+@export var puzzle_size := 5
 var puzzle := []
 var row_clues := []
 var col_clues := []
@@ -27,7 +27,7 @@ var direction = null
 var selected_rc = null
 var selected_fx = null
 
-func start_game():
+func start_pxgame(): # renamed to be more specific to px
 	generate_random_puzzle(puzzle_size)
 	initialize_puzzle()
 	

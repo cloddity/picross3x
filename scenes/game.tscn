@@ -1,14 +1,46 @@
-[gd_scene load_steps=3 format=3 uid="uid://c6pfnafjpaows"]
+[gd_scene load_steps=4 format=3 uid="uid://c6pfnafjpaows"]
 
 [ext_resource type="Script" uid="uid://dgu5t285agx4i" path="res://scripts/px_game.gd" id="1_uwrxv"]
 [ext_resource type="PackedScene" uid="uid://drlex6la3dhvk" path="res://scenes/picross/board/board.tscn" id="2_lnu2h"]
+[ext_resource type="Script" uid="uid://b7va8rcf24m1k" path="res://p3x_state.gd" id="3_lnu2h"]
 
 [node name="Game" type="Control"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_uwrxv")
 
 [node name="Board" parent="." instance=ExtResource("2_lnu2h")]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.085
+offset_top = -267.135
+offset_right = -156.085
+offset_bottom = -259.135
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+puzzle_size = 8
+
+[node name="state_machine" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_lnu2h")
+
+[node name="State" type="Node" parent="state_machine"]
+
+[node name="State2" type="Node" parent="state_machine"]
+
+[node name="State3" type="Node" parent="state_machine"]
+
+[node name="State4" type="Node" parent="state_machine"]
+
+[node name="State5" type="Node" parent="state_machine"]
+
+[node name="State6" type="Node" parent="state_machine"]

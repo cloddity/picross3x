@@ -3,9 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://bp6jf0w6sefbx" path="res://scenes/picross/ui/ui.tscn" id="1_70dfo"]
 [ext_resource type="Script" uid="uid://box6058l763dg" path="res://scripts/px_board.gd" id="1_t7a1m"]
 
-
 [node name="Board" type="VBoxContainer"]
 script = ExtResource("1_t7a1m")
+puzzle_size = 10
 
 [node name="puzzleContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
