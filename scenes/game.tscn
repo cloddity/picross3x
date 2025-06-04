@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c6pfnafjpaows"]
 
 [ext_resource type="Script" uid="uid://dgu5t285agx4i" path="res://scripts/px_game.gd" id="1_uwrxv"]
-[ext_resource type="PackedScene" uid="uid://drlex6la3dhvk" path="res://scenes/picross/board/board.tscn" id="2_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://c1hl78tfd0pb3" path="res://scenes/picross/board/board.tscn" id="2_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://nnrs0tyub6g0" path="res://scenes/visualnovel/visualnovel.tscn" id="3_lnu2h"]
 [ext_resource type="Script" uid="uid://dceyt13e1p82t" path="res://scenes/visualnovel/vn_Visualnovel.gd" id="4_lbhrr"]
 
@@ -33,4 +33,3 @@ offset_bottom = -259.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(2, 2)
-puzzle_size = 7

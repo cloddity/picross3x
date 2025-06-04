@@ -104,6 +104,7 @@ border_width = 2.4
 layer = 10
 
 [node name="Control_Textbox" type="Control" parent="CanvasLayer_Txtbox"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -125,6 +126,7 @@ grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxTexture_dqd56")
 
 [node name="Control_DiaLable" type="Control" parent="CanvasLayer_Txtbox"]
+visible = false
 layout_mode = 3
 anchors_preset = 7
 anchor_left = 0.5
@@ -154,6 +156,7 @@ bbcode_enabled = true
 text = "Placeholder text is going right here"
 
 [node name="CanvasLayer_Chara" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="Control" type="Control" parent="CanvasLayer_Chara"]
 layout_mode = 3
@@ -184,6 +187,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="BG1" type="AnimatedSprite2D" parent="CanvasLayer_BG/Control"]
+visible = false
 position = Vector2(5, -62)
 scale = Vector2(0.76, 0.76)
 sprite_frames = SubResource("SpriteFrames_6h5da")

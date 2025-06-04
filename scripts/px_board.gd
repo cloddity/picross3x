@@ -1,8 +1,12 @@
 extends VBoxContainer
 
 const TILE_SCENE = preload("res://scenes/picross/tiles/tile.tscn")
-const UNIT_CONST = 36
-const MARGIN_CONST = 3
+@export var puzzle_height := 10
+@export var puzzle_width := 10
+
+var unit: int = preload("res://scripts/constants.gd").UNIT_CONST
+var UNIT_CONST: int = int((1 - (0.06 * (puzzle_height - 5))) * unit)
+var MARGIN_CONST: int = int(puzzle_width / 2) + 1
 
 @onready var puzzle_container = $puzzleContainer
 @onready var input_container = $UI/inputContainer
@@ -16,7 +20,6 @@ const MARGIN_CONST = 3
 @onready var top_filler = $puzzleContainer/rightSide/topFiller
 @onready var ui = $UI
 
-@export var puzzle_size := 5
 var puzzle := []
 var row_clues := []
 var col_clues := []
@@ -28,18 +31,23 @@ var selected_rc = null
 var selected_fx = null
 
 func start_pxgame(): # renamed to be more specific to px
-	generate_random_puzzle(puzzle_size)
+	generate_random_puzzle(puzzle_width, puzzle_height)
 	initialize_puzzle()
 	
 	ui.import_requested.connect(_on_import)
 	ui.random_requested.connect(_on_random)
 	
-	print("Tile min size:", custom_minimum_size)
-	print("Tile actual size:", size)
+	#print("Tile min size:", custom_minimum_size)
+	#print("Tile actual size:", size)
 	
 	var target_width = puzzle_container.size.x
 	input_container.position.x = UNIT_CONST * MARGIN_CONST
 	print(target_width)
+	
+	var grid_max_size = 60
+	puzzle_grid.custom_minimum_size = Vector2(grid_max_size, grid_max_size)
+	puzzle_grid.size_flags_horizontal = Control.SIZE_FILL
+	puzzle_grid.size_flags_vertical = Control.SIZE_FILL
 
 func set_tile():
 	is_dragging = true
@@ -59,7 +67,8 @@ func mark_tile(tile):
 		tile.toggle_x()
 		print("x")
 	
-func _input(event):
+func _unhandled_input(event):
+	#print("unhandled")
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
@@ -90,7 +99,7 @@ func _on_tile_hovered(tile):
 				tile.toggle_x()
 		elif tile.is_marked != 0:
 			tile.untoggle_fill()
-		#print("initialized:", drag_start_tile.grid_position, " ", drag_start_tile.is_marked)
+		print("initialized:", drag_start_tile.grid_position, " ", drag_start_tile.is_marked)
 		return
 
 	var dx = tile.grid_position.x - drag_start_tile["grid_position"].x
@@ -124,7 +133,7 @@ func _on_tile_hovered(tile):
 				tile.untoggle_fill()
 				print("u2")
 			
-	#print(direction, " ", selected_rc, "dx", dx, "dy", dy)
+	print(direction, " ", selected_rc, "dx", dx, "dy", dy)
 
 
 func _in_range(val, a, b):
@@ -148,25 +157,27 @@ func adjust_top_left_filler():
 	top_filler.custom_minimum_size = top_filler_size
 	top_filler.size_flags_horizontal = 0
 
-func generate_random_puzzle(size: int):
+func generate_random_puzzle(x: int, y: int):
 	puzzle.clear()
-	for _i in size:
+	for _i in range(y):
 		var row = []
-		for _j in size:
+		for _j in range(x):
 			row.append(randi() % 2)
 		puzzle.append(row)
 
+# logic: given puzzle as binary rows (00,00), occupy row_clues and col_clues with lists of clues for each
 func generate_clues():
 	row_clues = []
 	col_clues = []
 	for row in puzzle:
 		row_clues.append(_generate_clue_line(row))
-	for col in range(puzzle_size):
+	for col in range(puzzle_width):
 		var column = []
-		for row in range(puzzle_size):
+		for row in range(puzzle_height):
 			column.append(puzzle[row][col])
 		col_clues.append(_generate_clue_line(column))
 
+# logic: group a row or column of binary values
 func _generate_clue_line(line: Array) -> Array:
 	var clues = []
 	var count = 0
@@ -180,6 +191,7 @@ func _generate_clue_line(line: Array) -> Array:
 		clues.append(count)
 	return clues if clues.size() > 0 else [0]
 
+# render: 
 func populate_clue_labels():
 	for child in row_clues_box.get_children():
 		child.queue_free()
@@ -225,16 +237,24 @@ func populate_puzzle_grid():
 	for child in puzzle_grid.get_children():
 		child.queue_free()
 	
-	puzzle_grid.columns = puzzle_size
-	for y in puzzle_size:
-		for x in puzzle_size:
+	puzzle_grid.columns = puzzle_width
+	for y in puzzle_height:
+		for x in puzzle_width:
 			var tile = TILE_SCENE.instantiate()
+			tile.UNIT_CONST = UNIT_CONST
 			tile.is_filled = puzzle[y][x] == 1
 			tile.connect("tile_pressed", self.check_solution)
 			puzzle_grid.add_child(tile)
 			
 			tile.grid_position = Vector2i(x, y)
 			tile.connect("tile_hovered", Callable(self, "_on_tile_hovered"))
+			
+			tile.custom_minimum_size = Vector2(UNIT_CONST, UNIT_CONST)
+			tile.set_anchors_preset(Control.PRESET_CENTER)
+			tile.set_size(Vector2(UNIT_CONST, UNIT_CONST))
+
+			tile.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+			tile.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 
 func check_solution():
 	var all_correct = true
@@ -259,10 +279,12 @@ func initialize_puzzle():
 	adjust_top_left_filler()
 	
 func _on_import(puzzle_data: Array):
-	puzzle_size = puzzle_data.size()
 	puzzle = puzzle_data
+	puzzle_height = puzzle.size()
+	puzzle_width = puzzle[0].size() if puzzle_height > 0 else 0
 	initialize_puzzle()
 
 func _on_random():
-	generate_random_puzzle(puzzle_size)
+	print("Generating random puzzle of size:", puzzle_width, puzzle_height)
+	generate_random_puzzle(puzzle_width, puzzle_height)
 	initialize_puzzle()

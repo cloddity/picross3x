@@ -29,4 +29,5 @@ func _on_import_pressed():
 	emit_signal("import_requested", puzzle_data)
 
 func _on_random_pressed():
+	print("Random button pressed")
 	emit_signal("random_requested")

@@ -3,7 +3,7 @@ extends TextureButton
 signal tile_pressed
 signal tile_hovered(tile: Node)
 
-const UNIT_CONST = 36
+@export var UNIT_CONST: int = 0
 
 var pxtile_empty = preload("res://img/sqr_black.png")
 var pxtile_filled = preload("res://img/sqr_white.png")
@@ -14,6 +14,7 @@ var is_marked: int = 0
 var grid_position: Vector2i
 
 func _ready():
+	#text = ""
 	texture_normal = pxtile_empty
 	toggle_mode = false
 	focus_mode = Control.FOCUS_NONE
@@ -23,6 +24,7 @@ func _ready():
 	connect("mouse_entered", Callable(self, "_on_mouse_entered"))
 
 func _on_mouse_entered():
+	print("Hovered:", grid_position)
 	emit_signal("tile_hovered", self)
 	
 func is_mouse_over() -> bool:
@@ -33,17 +35,17 @@ func _gui_input(event):
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			emit_signal("tile_pressed")
 
-
 func untoggle_fill():
 	is_marked = 0
+	#text = ""
 	texture_normal = pxtile_empty
 
-	
 func toggle_fill():
 	is_marked = 1
+	#text = "O"
 	texture_normal = pxtile_filled
 
-	
 func toggle_x():
 	is_marked = 2
+	#text = "X"
 	texture_normal = pxtile_cross
